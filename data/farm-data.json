@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "farmName": "我的榴莲庄 My Durian Farm",
+    "currency": "MYR",
+    "updatedAt": "2026-06-12T00:00:00.000Z"
+  },
+  "fixedCosts": [
+    {
+      "id": "F-rent",
+      "type": "land_rent",
+      "label": "土地租金 Land Rent",
+      "amountPerMonth": 3000,
+      "startDate": "2026-01-01",
+      "note": "果园每月租金"
+    },
+    {
+      "id": "F-dep",
+      "type": "depreciation",
+      "label": "树苗/设备折旧 Depreciation",
+      "amountPerMonth": 1200,
+      "startDate": "2026-01-01",
+      "note": "树苗与农具按月折旧"
+    }
+  ],
+  "priceTargets": [
+    { "variety": "猫山王 Musang King", "grade": "A", "targetPrice": 60 },
+    { "variety": "猫山王 Musang King", "grade": "B", "targetPrice": 38 },
+    { "variety": "猫山王 Musang King", "grade": "C", "targetPrice": 20 },
+    { "variety": "黑刺 Black Thorn", "grade": "A", "targetPrice": 50 },
+    { "variety": "黑刺 Black Thorn", "grade": "B", "targetPrice": 32 },
+    { "variety": "黑刺 Black Thorn", "grade": "C", "targetPrice": 18 },
+    { "variety": "D24", "grade": "A", "targetPrice": 25 },
+    { "variety": "D24", "grade": "B", "targetPrice": 16 },
+    { "variety": "D24", "grade": "C", "targetPrice": 10 }
+  ],
+  "batches": [
+    {
+      "id": "B-20260601-01",
+      "date": "2026-06-01",
+      "variety": "猫山王 Musang King",
+      "plot": "A区",
+      "harvestCount": 320,
+      "harvestWeightKg": 640,
+      "farmSpoilageKg": 35,
+      "grades": { "A": 300, "B": 220, "C": 85 },
+      "treeAge": "old",
+      "harvestMethod": "drop",
+      "pulpYieldPct": 28,
+      "avgFruitWeightKg": 0,
+      "variableCosts": {
+        "labor": 800,
+        "fertilizer": 450,
+        "pesticide": 200,
+        "utilities": 120,
+        "packaging": 180,
+        "transport": 300
+      },
+      "note": "首批猫山王，老树果，自然掉落；园区有一些裂果坏掉"
+    },
+    {
+      "id": "B-20260605-01",
+      "date": "2026-06-05",
+      "variety": "黑刺 Black Thorn",
+      "plot": "B区",
+      "harvestCount": 180,
+      "harvestWeightKg": 396,
+      "farmSpoilageKg": 12,
+      "grades": { "A": 200, "B": 140, "C": 44 },
+      "treeAge": "mature",
+      "harvestMethod": "drop",
+      "pulpYieldPct": 25,
+      "avgFruitWeightKg": 2.2,
+      "variableCosts": {
+        "labor": 500,
+        "fertilizer": 260,
+        "pesticide": 120,
+        "utilities": 80,
+        "packaging": 110,
+        "transport": 220
+      },
+      "note": "黑刺品质好，损耗低"
+    }
+  ],
+  "orders": [
+    {
+      "id": "O-20260603-01",
+      "date": "2026-06-03",
+      "merchant": "M-aaa",
+      "batchIds": ["B-20260601-01"],
+      "grade": "B",
+      "weightKg": 400,
+      "unitPrice": 38,
+      "transitSpoilageKg": 45,
+      "rejectedKg": 20,
+      "amountBilled": 15200,
+      "amountReceived": 12730,
+      "paymentStatus": "partial",
+      "note": "城南走 B 级量大，运输+拒收损耗高，按实收结算"
+    },
+    {
+      "id": "O-20260606-01",
+      "date": "2026-06-06",
+      "merchant": "M-bbb",
+      "batchIds": ["B-20260601-01"],
+      "grade": "A",
+      "weightKg": 160,
+      "unitPrice": 40,
+      "transitSpoilageKg": 8,
+      "rejectedKg": 0,
+      "amountBilled": 6400,
+      "amountReceived": 6400,
+      "paymentStatus": "paid",
+      "note": "A 级却只卖 40，远低于目标价 60——卖亏了"
+    },
+    {
+      "id": "O-20260607-01",
+      "date": "2026-06-07",
+      "merchant": "M-bbb",
+      "batchIds": ["B-20260605-01"],
+      "grade": "B",
+      "weightKg": 380,
+      "unitPrice": 30,
+      "transitSpoilageKg": 10,
+      "rejectedKg": 5,
+      "amountBilled": 11400,
+      "amountReceived": 0,
+      "paymentStatus": "unpaid",
+      "note": "黑刺 B 级批发，尚未回款"
+    }
+  ],
+  "merchants": [
+    {
+      "id": "M-aaa",
+      "name": "城南水果批发行 City South Fruit",
+      "contact": "陈老板 012-3456789",
+      "terms": "月结30天",
+      "note": "量大但常压价、退货多"
+    },
+    {
+      "id": "M-bbb",
+      "name": "本地生鲜店 Local Grocer",
+      "contact": "Lim 016-9988776",
+      "terms": "货到付款 / 7天",
+      "note": "回款快、损耗低，优质客户"
+    }
+  ]
+}

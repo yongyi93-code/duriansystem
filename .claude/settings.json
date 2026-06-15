@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(open -a \"Google Chrome\" \"dashboard/index.html\")",
+      "Bash(open \"dashboard/index.html\")",
+      "Bash(git --version)",
+      "Bash(gh auth *)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)"
+    ]
+  }
+}

@@ -7,7 +7,16 @@
       "Bash(gh auth *)",
       "Bash(git init *)",
       "Bash(git config *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -q -m ' *)",
+      "Bash(git remote *)",
+      "Bash(GIT_TERMINAL_PROMPT=0 timeout 15 git push -u origin main)",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(git ls-tree *)",
+      "Bash(git merge *)",
+      "Bash(chmod +x 备份上传.command 同步下载.command)",
+      "Bash(GIT_TERMINAL_PROMPT=0 ./备份上传.command)"
     ]
   }
 }

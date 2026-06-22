@@ -6,3 +6,7 @@
 
 # Playwright 测试工具依赖（本地安装，不同步）
 .claude/skills/run-durian-dashboard/node_modules/
+
+# Firebase 服务账号密钥（真正的密钥，能绕过所有 Firestore 安全规则，绝不能提交！）
+.claude/firebase-service-account.json
+.claude/scripts/node_modules/

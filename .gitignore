@@ -13,3 +13,6 @@
 
 # 真实经营数据现在只存在 Firestore 云端；本地文件由 sync 脚本 pull 写入真实数据，不能提交
 data/farm-data.json
+
+# brainstorming 可视化小窗口的临时素材
+.superpowers/

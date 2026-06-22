@@ -21,14 +21,18 @@ open -a "Google Chrome" dashboard/index.html
 
 Chrome is required for the "连接数据文件" feature (File System Access API). Other browsers fall back to manual 导入/导出 JSON.
 
-## Data is the single source of truth
+## Data is the single source of truth — now in Firestore, mirrored to a local file
 
-`data/farm-data.json` is the ONE source of truth shared by the dashboard and all agents. Top-level keys: `meta`, `fixedCosts`, `priceTargets`, `batches`, `orders`, `merchants`.
+The real source of truth is now **Firestore** (`farmData/{uid}` document, single doc holding the whole JSON blob), synced from the mobile/desktop dashboard via Firebase email/password login (see `dashboard/firebase-init.js`). `data/farm-data.json` is a **local mirror** used by agents to Read/Edit — it is NOT committed to git (`.gitignore`) since the repo is public; only an example/empty structure ever lived in git history.
 
-- The dashboard keeps `localStorage["durianFarmData"]` as primary store and, once the user clicks **📂 连接数据文件** and picks `data/farm-data.json`, mirrors every change back to that file via a retained file handle (`saveData()` in `dashboard/app.js`). This is the only way agents see live edits.
-- Agents (and you) may edit `data/farm-data.json` directly. After editing, tell the user to re-click **连接数据文件** (or refresh) so the dashboard reloads — the dashboard does not watch the file.
+- **Before reading data, pull the latest from cloud:** `node .claude/scripts/sync-farm-data.mjs pull` — overwrites local `data/farm-data.json` with the cloud copy.
+- **After editing `data/farm-data.json`, push it back:** `node .claude/scripts/sync-farm-data.mjs push` — so the phone/desktop dashboard sees the change on next refresh.
+- The sync script uses a Firebase Admin SDK service-account key at `.claude/firebase-service-account.json` (gitignored, never commit). If it's missing, tell the user to generate one from Firebase Console → Project Settings → Service Accounts → Generate new private key.
+- Top-level keys: `meta`, `fixedCosts`, `priceTargets`, `batches`, `orders`, `merchants`.
 - New IDs follow `B-YYYYMMDD-NN` (batches) and `O-YYYYMMDD-NN` (orders).
 - `data/backups/` holds timestamped JSON snapshots; the admin agent creates these.
+- The dashboard's File System Access "📂 连接数据文件" feature (desktop Chrome only) still works as a legacy/optional local mirror — Firestore is the real sync path now.
+- **Conflict rule:** sync is whole-document last-write-wins. Don't `pull` after editing without `push`ing first, or you'll lose your edits. Always pull → edit → push in that order, don't leave a long gap between pull and push during which the owner might edit on their phone.
 
 ## The core calculation contract (灵魂公式)
 

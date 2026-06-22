@@ -10,3 +10,6 @@
 # Firebase 服务账号密钥（真正的密钥，能绕过所有 Firestore 安全规则，绝不能提交！）
 .claude/firebase-service-account.json
 .claude/scripts/node_modules/
+
+# 真实经营数据现在只存在 Firestore 云端；本地文件由 sync 脚本 pull 写入真实数据，不能提交
+data/farm-data.json

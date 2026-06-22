@@ -946,6 +946,12 @@ function formModal(title, bodyHtml, onSave) {
 window.closeModal = function () { $("#modal").classList.remove("show"); $("#modal").innerHTML = ""; };
 
 /* ===================================================================
+   5b. 快速记一笔（悬浮按钮）
+   =================================================================== */
+window.openQuickPicker = function () { $("#quickPicker").classList.add("show"); };
+window.closeQuickPicker = function () { $("#quickPicker").classList.remove("show"); };
+
+/* ===================================================================
    6. 图表（Chart.js）
    =================================================================== */
 function drawMonthly() {
@@ -1063,6 +1069,10 @@ function init() {
   $("#btnExcel").onclick = exportExcel;
   $("#btnExportJSON").onclick = exportJSON;
   $("#btnImportJSON").onclick = importJSON;
+  $("#fabQuick").onclick = openQuickPicker;
+  $("#qpCancel").onclick = closeQuickPicker;
+  $("#qpHarvest").onclick = () => { closeQuickPicker(); quickAddBatch(); };
+  $("#qpSell").onclick = () => { closeQuickPicker(); quickAddOrder(); };
   if (!window.showOpenFilePicker) setFileStatus("提示：用 Chrome 打开可一键连接数据文件给 AI 团队读；当前浏览器请用导入/导出 JSON。");
   registerServiceWorker();
   initFirebaseSync();

@@ -44,6 +44,21 @@
 
   <div id="modal" class="modal"></div>
 
+  <button id="fabQuick" class="fab" title="快速记一笔">➕</button>
+  <div id="quickPicker" class="modal">
+    <div class="modal-card" style="max-width:320px;text-align:center;">
+      <h3>快速记一笔 Quick Add</h3>
+      <p class="muted">只填最关键的几个数字，其余以后再补。</p>
+      <div style="display:grid;gap:10px;margin-top:12px;">
+        <button class="btn" id="qpHarvest">🌳 采收 Harvest</button>
+        <button class="btn ghost" id="qpSell" style="background:#eef3ef;color:var(--ink);">🚚 卖货 Sell</button>
+      </div>
+      <div class="modal-actions" style="justify-content:center;margin-top:14px;">
+        <button class="btn ghost" id="qpCancel" style="background:#eef3ef;color:var(--ink);">取消 Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <div id="loginGate" class="modal show">
     <div class="modal-card" style="max-width:360px;">
       <h3>🔒 登录 Login</h3>

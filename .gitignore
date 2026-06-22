@@ -3,3 +3,6 @@
 
 # 机器本地的 Claude Code 设置（每台电脑各自的权限/路径，不要同步）
 .claude/settings.local.json
+
+# Playwright 测试工具依赖（本地安装，不同步）
+.claude/skills/run-durian-dashboard/node_modules/

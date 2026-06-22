@@ -1,0 +1,15 @@
+{
+  "name": "榴莲庄经营追踪系统 Durian Farm Tracker",
+  "short_name": "榴莲庄",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#f5f8f5",
+  "theme_color": "#2e7d32",
+  "lang": "zh",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

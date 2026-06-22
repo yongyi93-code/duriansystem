@@ -963,6 +963,11 @@ window.importJSON = function () {
   inp.click();
 };
 
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+  navigator.serviceWorker.register("sw.js").catch((e) => console.warn("Service worker 注册失败", e));
+}
+
 /* ===================================================================
    8. 启动
    =================================================================== */
@@ -975,6 +980,7 @@ function init() {
   $("#btnExportJSON").onclick = exportJSON;
   $("#btnImportJSON").onclick = importJSON;
   if (!window.showOpenFilePicker) setFileStatus("提示：用 Chrome 打开可一键连接数据文件给 AI 团队读；当前浏览器请用导入/导出 JSON。");
+  registerServiceWorker();
   renderAll();
 }
 document.addEventListener("DOMContentLoaded", init);

@@ -28,6 +28,7 @@
   </header>
 
   <div class="filestatus" id="fileStatus">数据存在本浏览器。点「连接数据文件」选 data/farm-data.json，AI 团队即可读到你的最新数据。</div>
+  <div class="filestatus" id="syncStatus">☁️ 云端同步：未登录</div>
 
   <div class="layout">
     <nav class="sidebar">
@@ -42,6 +43,22 @@
   </div>
 
   <div id="modal" class="modal"></div>
+
+  <div id="loginGate" class="modal show">
+    <div class="modal-card" style="max-width:360px;">
+      <h3>🔒 登录 Login</h3>
+      <p class="muted">用你的邮箱密码登录，数据云端同步。</p>
+      <form id="loginForm" class="form">
+        <div class="fld"><span>邮箱 Email</span><input type="email" id="loginEmail" required /></div>
+        <div class="fld"><span>密码 Password</span><input type="password" id="loginPassword" required /></div>
+        <div id="loginError" class="hint warn-text"></div>
+        <div class="modal-actions"><button type="submit" class="btn">登录 Login</button></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="firebase-config.js"></script>
+  <script type="module" src="firebase-init.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

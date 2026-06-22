@@ -343,6 +343,90 @@ async function saveData() {
       setFileStatus("⚠️ 写入数据文件失败，已存浏览器。可重新连接文件。");
     }
   }
+  if (cloudUid) {
+    try {
+      await window.firebaseSaveDoc(cloudUid, DATA);
+      setSyncStatus("☁️ 已同步到云端 " + new Date().toLocaleTimeString());
+    } catch (e) {
+      console.warn("云端同步失败", e);
+      setSyncStatus("⚠️ 云端同步失败，已存浏览器本地");
+    }
+  }
+}
+
+/* ===================================================================
+   2b. Firebase 登录 + Firestore 云端同步（手机/电脑数据互通）
+   =================================================================== */
+let cloudUid = null;
+let cloudUnsub = null;
+
+function setSyncStatus(msg) {
+  const el = document.getElementById("syncStatus");
+  if (el) el.textContent = msg;
+}
+
+function showLoginGate(show) {
+  const gate = document.getElementById("loginGate");
+  if (gate) gate.classList.toggle("show", show);
+}
+
+async function onCloudLogin(user) {
+  cloudUid = user.uid;
+  showLoginGate(false);
+  setSyncStatus("☁️ 已登录，正在同步…");
+  try {
+    const cloudData = await window.firebaseLoadDoc(cloudUid);
+    if (cloudData && (!DATA.meta || !DATA.meta.updatedAt || new Date(cloudData.meta.updatedAt) > new Date(DATA.meta.updatedAt))) {
+      DATA = cloudData;
+      localStorage.setItem(LS_KEY, JSON.stringify(DATA));
+      renderAll();
+    } else if (!cloudData) {
+      await window.firebaseSaveDoc(cloudUid, DATA);
+    }
+    setSyncStatus("☁️ 云端同步正常");
+  } catch (e) {
+    console.warn("初始云端同步失败", e);
+    setSyncStatus("⚠️ 云端同步失败，使用本地数据");
+  }
+  if (cloudUnsub) cloudUnsub();
+  cloudUnsub = window.firebaseWatchDoc(cloudUid, (remoteData) => {
+    if (remoteData && remoteData.meta && DATA.meta && remoteData.meta.updatedAt !== DATA.meta.updatedAt &&
+        new Date(remoteData.meta.updatedAt) > new Date(DATA.meta.updatedAt)) {
+      DATA = remoteData;
+      localStorage.setItem(LS_KEY, JSON.stringify(DATA));
+      renderAll();
+      setSyncStatus("☁️ 已从其他设备同步最新数据 " + new Date().toLocaleTimeString());
+    }
+  });
+}
+
+function onCloudLogout() {
+  cloudUid = null;
+  if (cloudUnsub) { cloudUnsub(); cloudUnsub = null; }
+  showLoginGate(true);
+}
+
+function initFirebaseSync() {
+  if (!window.firebaseOnAuthChange) {
+    window.addEventListener("firebase-ready", initFirebaseSync, { once: true });
+    return;
+  }
+  window.firebaseOnAuthChange((user) => { if (user) onCloudLogin(user); else onCloudLogout(); });
+  const form = document.getElementById("loginForm");
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      const errEl = document.getElementById("loginError");
+      errEl.textContent = "";
+      try {
+        await window.firebaseLogin(email, password);
+      } catch (err) {
+        errEl.textContent = "登录失败：" + (err.message || err.code || "请检查邮箱密码");
+      }
+    });
+  }
 }
 
 function setFileStatus(msg) {
@@ -981,6 +1065,7 @@ function init() {
   $("#btnImportJSON").onclick = importJSON;
   if (!window.showOpenFilePicker) setFileStatus("提示：用 Chrome 打开可一键连接数据文件给 AI 团队读；当前浏览器请用导入/导出 JSON。");
   registerServiceWorker();
+  initFirebaseSync();
   renderAll();
 }
 document.addEventListener("DOMContentLoaded", init);

@@ -59,13 +59,17 @@ h3 { font-size: 15px; color: var(--green-dark); }
 
 /* ---------- Cards ---------- */
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin: 16px 0; }
-.card { background: var(--card); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); border-left: 4px solid var(--green); }
-.card.good { border-left-color: var(--green); }
-.card.bad { border-left-color: var(--red); }
-.card.warn { border-left-color: var(--amber); }
-.card-label { font-size: 12.5px; color: var(--muted); }
-.card-val { font-size: 24px; font-weight: 800; margin: 4px 0; }
-.card-sub { font-size: 12px; color: var(--muted); }
+.card {
+  background: linear-gradient(135deg, var(--green-dark), var(--green) 60%, #43a047);
+  color: #fff; border-radius: 18px; padding: 16px;
+  box-shadow: 0 10px 24px rgba(27, 94, 32, .25);
+}
+.card.good { background: linear-gradient(135deg, var(--green-dark), var(--green) 60%, #66bb6a); }
+.card.bad { background: linear-gradient(135deg, #8e0000, var(--red) 60%, #e53935); }
+.card.warn { background: linear-gradient(135deg, #8a4b00, var(--amber) 60%, #ffa726); }
+.card-label { font-size: 12.5px; color: rgba(255, 255, 255, .85); }
+.card-val { font-size: 26px; font-weight: 800; margin: 4px 0; color: #fff; }
+.card-sub { font-size: 12px; color: rgba(255, 255, 255, .75); }
 
 /* ---------- Alerts ---------- */
 .alerts { background: #fff4f2; border: 1px solid #ffcdc4; border-radius: 12px; padding: 12px 16px; margin: 8px 0 18px; }
@@ -88,19 +92,19 @@ h3 { font-size: 15px; color: var(--green-dark); }
 .tbl .neg { color: var(--red); font-weight: 700; }
 
 /* ---------- Buttons ---------- */
-.btn { background: var(--green); color: #fff; border: none; padding: 9px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 13px; }
+.btn { background: var(--green); color: #fff; border: none; padding: 9px 16px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 13px; box-shadow: 0 2px 6px rgba(27, 94, 32, .25); }
 .btn:hover { background: var(--green-dark); }
 .btn.small { padding: 7px 11px; font-size: 12px; }
-.btn.ghost { background: rgba(255, 255, 255, .18); }
+.btn.ghost { background: rgba(255, 255, 255, .18); box-shadow: none; }
 .toolbar .btn.ghost { color: #fff; }
-.btn.ghost:not(.small) { background: #eef3ef; color: var(--ink); }
+.btn.ghost:not(.small) { background: #eef3ef; color: var(--ink); box-shadow: none; }
 .link { background: none; border: none; color: var(--green); cursor: pointer; font-size: 12.5px; padding: 2px 4px; }
 .link.danger { color: var(--red); }
 
 /* ---------- Modal / Form ---------- */
 .modal { position: fixed; inset: 0; background: rgba(20, 40, 25, .45); display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow: auto; z-index: 50; }
 .modal.show { display: flex; }
-.modal-card { background: #fff; border-radius: 16px; padding: 22px; width: 100%; max-width: 520px; box-shadow: 0 20px 60px rgba(0, 0, 0, .25); }
+.modal-card { background: #fff; border-radius: 18px; padding: 22px; width: 100%; max-width: 520px; box-shadow: 0 20px 60px rgba(0, 0, 0, .25); }
 .modal-card h3 { margin-top: 0; }
 .form { display: grid; gap: 10px; }
 .fld { display: grid; gap: 4px; }

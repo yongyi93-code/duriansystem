@@ -951,6 +951,29 @@ window.closeModal = function () { $("#modal").classList.remove("show"); $("#moda
 window.openQuickPicker = function () { $("#quickPicker").classList.add("show"); };
 window.closeQuickPicker = function () { $("#quickPicker").classList.remove("show"); };
 
+window.quickAddBatch = function () {
+  formModal("快速记一笔 · 采收 Quick Harvest", `
+    ${field("date", "采收日期 Date", "date", new Date().toISOString().slice(0, 10))}
+    ${field("variety", "品种 Variety", "text", "", "如 猫山王 Musang King")}
+    ${field("harvestWeightKg", "采收重量(kg) Weight", "number", 0)}
+  `, () => {
+    const g = (n) => $(`#fld_${n}`).value;
+    const num = (n) => Number(g(n)) || 0;
+    const rec = {
+      id: "B-" + g("date").replace(/-/g, "") + "-" + uid("").slice(-3),
+      date: g("date"), variety: g("variety"), plot: "",
+      harvestCount: 0, harvestWeightKg: num("harvestWeightKg"), farmSpoilageKg: 0,
+      grades: { A: 0, B: 0, C: 0 },
+      treeAge: "", harvestMethod: "",
+      pulpYieldPct: 0, avgFruitWeightKg: 0,
+      variableCosts: { labor: 0, fertilizer: 0, pesticide: 0, utilities: 0, packaging: 0, transport: 0 },
+      note: "快速记录，待补充明细"
+    };
+    DATA.batches.push(rec);
+    saveData(); closeModal(); renderAll();
+  });
+};
+
 /* ===================================================================
    6. 图表（Chart.js）
    =================================================================== */

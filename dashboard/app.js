@@ -974,6 +974,31 @@ window.quickAddBatch = function () {
   });
 };
 
+window.quickAddOrder = function () {
+  const merchOpts = DATA.merchants.map(m => `<option value="${m.id}">${esc(m.name)}</option>`).join("");
+  formModal("快速记一笔 · 卖货 Quick Sell", `
+    <label class="fld"><span>商家 Merchant</span><select id="fld_merchant">${merchOpts || '<option value="">先去「客户」加商家</option>'}</select></label>
+    ${field("weightKg", "卖出重量(kg) Weight", "number", 0)}
+    ${field("unitPrice", "单价 Unit Price", "number", 0)}
+  `, () => {
+    const g = (n) => $(`#fld_${n}`).value;
+    const num = (n) => Number(g(n)) || 0;
+    const weightKg = num("weightKg"), unitPrice = num("unitPrice");
+    const amount = Math.round(weightKg * unitPrice * 100) / 100;
+    const today = new Date().toISOString().slice(0, 10);
+    const rec = {
+      id: "O-" + today.replace(/-/g, "") + "-" + uid("").slice(-3),
+      date: today, merchant: g("merchant"), batchIds: [], grade: "B",
+      weightKg, unitPrice,
+      transitSpoilageKg: 0, rejectedKg: 0,
+      amountBilled: amount, amountReceived: amount,
+      paymentStatus: "paid", note: "快速记录，待补充明细（未关联批次）"
+    };
+    DATA.orders.push(rec);
+    saveData(); closeModal(); renderAll();
+  });
+};
+
 /* ===================================================================
    6. 图表（Chart.js）
    =================================================================== */
